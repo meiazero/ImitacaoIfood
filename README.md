@@ -58,16 +58,49 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
-## Support
+##DB Diagram
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
++----------------+       +----------------+       +----------------+
+|    Users       |       |  Restaurants   |       |    Dishes      |
++----------------+       +----------------+       +----------------+
+| user_id (PK)   |       | restaurant_id (PK)|    | dish_id (PK)   |
+| name           |       | name           |       | restaurant_id (FK)|
+| email          |       | address_id (FK)|       | name           |
+| password       |       | phone          |       | price          |
++----------------+       +----------------+       +----------------+
+        |                        |                        |
+        |                        |                        |
+        |                        |                        |
+        |                        |                        |
+        +------------------------+------------------------+
+                                 |
+                                 |
+                                 |
+                                 |
++----------------+       +----------------+       +----------------+
+|   Orders       |       | OrderItems     |       | DeliveryPersons|
++----------------+       +----------------+       +----------------+
+| order_id (PK)  |       | order_item_id (PK)|    | delivery_id (PK)|
+| user_id (FK)   |       | order_id (FK)   |       | name           |
+| restaurant_id (FK)|    | dish_id (FK)    |       | phone          |
+| delivery_id (FK)|      | quantity        |       | vehicle_type   |
+| address_id (FK)|       +----------------+       +----------------+
+| payment_id (FK)|               |
+| status         |               |
+| total_price    |               |
++----------------+               |
+                                 |
+                                 |
+                                 |
+                                 |
++----------------+       +----------------+       +----------------+
+|  Addresses     |       |   Payments     |       |                |
++----------------+       +----------------+       +----------------+
+| address_id (PK)|       | payment_id (PK)|       |                |
+| user_id (FK)   |       | order_id (FK)  |       |                |
+| street         |       | amount         |       |                |
+| city           |       | method         |       |                |
+| state          |       | status         |       |                |
+| zip_code       |       +----------------+       +----------------+
++----------------+
 
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
