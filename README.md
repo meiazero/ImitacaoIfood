@@ -58,49 +58,6 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
-##DB Diagram
-
-+----------------+       +----------------+       +----------------+
-|    Users       |       |  Restaurants   |       |    Dishes      |
-+----------------+       +----------------+       +----------------+
-| user_id (PK)   |       | restaurant_id (PK)|    | dish_id (PK)   |
-| name           |       | name           |       | restaurant_id (FK)|
-| email          |       | address_id (FK)|       | name           |
-| password       |       | phone          |       | price          |
-+----------------+       +----------------+       +----------------+
-        |                        |                        |
-        |                        |                        |
-        |                        |                        |
-        |                        |                        |
-        +------------------------+------------------------+
-                                 |
-                                 |
-                                 |
-                                 |
-+----------------+       +----------------+       +----------------+
-|   Orders       |       | OrderItems     |       | DeliveryPersons|
-+----------------+       +----------------+       +----------------+
-| order_id (PK)  |       | order_item_id (PK)|    | delivery_id (PK)|
-| user_id (FK)   |       | order_id (FK)   |       | name           |
-| restaurant_id (FK)|    | dish_id (FK)    |       | phone          |
-| delivery_id (FK)|      | quantity        |       | vehicle_type   |
-| address_id (FK)|       +----------------+       +----------------+
-| payment_id (FK)|               |
-| status         |               |
-| total_price    |               |
-+----------------+               |
-                                 |
-                                 |
-                                 |
-                                 |
-+----------------+       +----------------+       +----------------+
-|  Addresses     |       |   Payments     |       |                |
-+----------------+       +----------------+       +----------------+
-| address_id (PK)|       | payment_id (PK)|       |                |
-| user_id (FK)   |       | order_id (FK)  |       |                |
-| street         |       | amount         |       |                |
-| city           |       | method         |       |                |
-| state          |       | status         |       |                |
-| zip_code       |       +----------------+       +----------------+
-+----------------+
-
+## Intenção da Aplicação
+> Esta Aplicação tem o intuito de resolver a problematica de falta de aplicações de delivery na cidade, através realmente de uma aplicação semelhante as já consolidadas no mercado mas cobrando bem menos.
+</br> Fazendo um estudo percebi que uma porcentagem muito pequena de restaurantes e fast-foods tem seus estabelecimentos alojados na aplicação do ifood, tendo isto em mente fui buscar o valor que é cobrado para se inserir e decidi investir em uma aplicação parecida para funcionar somente na Cidade.
