@@ -6,8 +6,9 @@ import { DishesModule } from './dishes/dishes.module';
 import { OrdersModule } from './orders/orders.module';
 import { OrderItemsModule } from './order-items/order-items.module';
 import { DeliveryPersonsModule } from './delivery-persons/delivery-persons.module';
+import { AddressesModule } from './addresses/addresses.module';
 
 @Module({
-  imports: [UsersModule, PrismaModule, RestaurantsModule, DishesModule, OrdersModule, OrderItemsModule, DeliveryPersonsModule],
+  imports: [UsersModule, PrismaModule, RestaurantsModule, DishesModule, OrdersModule, OrderItemsModule, DeliveryPersonsModule, AddressesModule],
 })
 export class AppModule {}
