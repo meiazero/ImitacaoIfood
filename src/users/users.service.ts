@@ -4,11 +4,20 @@ import { User, Prisma } from '@prisma/client';
 
 @Injectable()
 export class UsersService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService) { }
 
   async createUser(data: Prisma.UserCreateInput): Promise<User> {
     return this.prisma.user.create({
       data,
+    });
+  }
+
+  async findOne(name: string, password: string): Promise<User | null> {
+    return this.prisma.user.findFirst({
+      where: {
+        name,
+        password,
+      },
     });
   }
 

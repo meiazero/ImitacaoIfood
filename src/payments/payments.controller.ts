@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param, Put, Delete } from '@nestjs.common';
+import { Controller, Get, Post, Body, Param, Put, Delete } from '@nestjs/common';
 import { PaymentsService } from './payments.service';
 import { Payment as PaymentModel, Prisma } from '@prisma/client';
 
