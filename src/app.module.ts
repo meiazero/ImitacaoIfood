@@ -1,16 +1,27 @@
-import { Module } from '@nestjs/common';
-import { UsersModule } from './users/users.module';
-import { PrismaModule } from '../prisma/prisma.module';
-import { RestaurantsModule } from './restaurants/restaurants.module';
-import { DishesModule } from './dishes/dishes.module';
-import { OrdersModule } from './orders/orders.module';
-import { OrderItemsModule } from './order-items/order-items.module';
-import { DeliveryPersonsModule } from './delivery-persons/delivery-persons.module';
-import { AddressesModule } from './addresses/addresses.module';
-import { PaymentsModule } from './payments/payments.module';
-import { AuthModule } from './auth/auth.module';
+import { PrismaModule } from '@/db/prisma.module'
+import { Module } from '@nestjs/common'
+import { AddressesModule } from './app/addresses/addresses.module'
+import { AuthModule } from './app/auth/auth.module'
+import { DeliveryPersonsModule } from './app/delivery-persons/delivery-persons.module'
+import { DishesModule } from './app/dishes/dishes.module'
+import { OrderItemsModule } from './app/order-items/order-items.module'
+import { OrdersModule } from './app/orders/orders.module'
+import { PaymentsModule } from './app/payments/payments.module'
+import { RestaurantsModule } from './app/restaurants/restaurants.module'
+import { UsersModule } from './app/users/users.module'
 
 @Module({
-  imports: [UsersModule, PrismaModule, RestaurantsModule, DishesModule, OrdersModule, OrderItemsModule, DeliveryPersonsModule, AddressesModule, PaymentsModule, AuthModule],
+  imports: [
+    UsersModule,
+    PrismaModule,
+    RestaurantsModule,
+    DishesModule,
+    OrdersModule,
+    OrderItemsModule,
+    DeliveryPersonsModule,
+    AddressesModule,
+    PaymentsModule,
+    AuthModule
+  ]
 })
 export class AppModule {}

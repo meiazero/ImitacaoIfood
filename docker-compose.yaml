@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: bitnami/mongodb:latest
+    restart: always
+    environment:
+      - MONGODB_ROOT_PASSWORD=root
+      - MONGODB_DATABASE=imitacao-ifood
+      - MONGODB_USERNAME=admin-user
+      - MONGODB_PASSWORD=imitacao-ifood
+    ports:
+      - 27017:27017
+    volumes:
+      - mongo_data:/bitnami/mongodb
+
+    healthcheck:
+      test: ["CMD", "mongo", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+volumes:
+  mongo_data:

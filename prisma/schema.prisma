@@ -10,74 +10,74 @@ generator client {
 }
 
 model User {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
   name      String
-  email     String   @unique
+  email     String    @unique
   password  String
   orders    Order[]
-  adress    Address[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  addresses Address[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 }
 
 model Restaurant {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  name      String
-  address   String
-  dishes    Dish[]
+  id      String @id @default(auto()) @map("_id") @db.ObjectId
+  name    String
+  address String
+  dishes  Dish[]
 }
 
 model Dish {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
-  name        String
-  description String
-  price       Float
-  restaurant  Restaurant @relation(fields: [restaurantId], references: [id])
-  restaurantId String
-  orderItems  OrderItem[]
+  id           String      @id @default(auto()) @map("_id") @db.ObjectId
+  name         String
+  description  String
+  price        Float
+  restaurant   Restaurant  @relation(fields: [restaurantId], references: [id])
+  restaurantId String      @db.ObjectId
+  orderItems   OrderItem[]
 }
 
 model Order {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  user      User      @relation(fields: [userId], references: [id])
-  userId    String
-  items     OrderItem[]
-  payments  Payment[]
-  total     Float
-  createdAt DateTime  @default(now())
+  id          String      @id @default(auto()) @map("_id") @db.ObjectId
+  user        User        @relation(fields: [userId], references: [id])
+  userId      String      @db.ObjectId
+  orderItems  OrderItem[]
+  payment     Payment[]
+  totalAmount Float
+  createdAt   DateTime    @default(now())
 }
 
 model OrderItem {
-  id      String   @id @default(auto()) @map("_id") @db.ObjectId
-  order   Order    @relation(fields: [orderId], references: [id])
-  orderId String
-  dish    Dish     @relation(fields: [dishId], references: [id])
-  dishId  String
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  order    Order  @relation(fields: [orderId], references: [id])
+  orderId  String @db.ObjectId // Changed from Int to String
+  dish     Dish   @relation(fields: [dishId], references: [id])
+  dishId   String @db.ObjectId // Ensure this matches the native type of Dish.id
   quantity Int
 }
 
 model DeliveryPerson {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
-  name        String
-  phone       String
-  vehicleType String
+  id      String @id @default(auto()) @map("_id") @db.ObjectId
+  name    String
+  phone   String
+  vehicle String
 }
 
 model Address {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  userId    String
-  street    String
-  city      String
-  state     String
-  zipCode   String
-  user      User      @relation(fields: [userId], references: [id])
+  id      String @id @default(auto()) @map("_id") @db.ObjectId
+  street  String
+  city    String
+  state   String
+  zipCode String
+  user    User   @relation(fields: [userId], references: [id])
+  userId  String @db.ObjectId // Add @db.ObjectId here to match the User.id type
 }
 
 model Payment {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  orderId   String
-  amount    Float
-  method    String
-  status    String
-  order     Order     @relation(fields: [orderId], references: [id])
+  id            String @id @default(auto()) @map("_id") @db.ObjectId
+  paymentAmount Float
+  paymentMethod String
+  paymentStatus String
+  order         Order  @relation(fields: [orderId], references: [id])
+  orderId       String @db.ObjectId // Add @db.ObjectId here to match the Order.id type
 }
