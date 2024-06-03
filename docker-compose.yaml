@@ -1,24 +1,58 @@
 version: '3.8'
 
 services:
-  mongodb:
-    image: bitnami/mongodb:latest
+  mongo-primary:
+    image: mongodb/mongodb-community-server:latest
     restart: always
     environment:
+      - MONGODB_REPLICA_SET_MODE=primary
+      - MONGODB_REPLICA_SET_NAME=my-replica-set
       - MONGODB_ROOT_PASSWORD=root
+      - MONGODB_REPLICA_SET_KEY=my-replica-set-key
       - MONGODB_DATABASE=imitacao-ifood
       - MONGODB_USERNAME=admin-user
       - MONGODB_PASSWORD=imitacao-ifood
     ports:
       - 27017:27017
     volumes:
-      - mongo_data:/bitnami/mongodb
-
+      - mongo-primary-data:/bitnami/mongodb
     healthcheck:
       test: ["CMD", "mongo", "--eval", "db.adminCommand('ping')"]
       interval: 10s
       timeout: 5s
       retries: 3
 
+  mongo-secondary:
+    image: mongodb/mongodb-community-server:latest
+    restart: always
+    environment:
+      - MONGODB_REPLICA_SET_MODE=secondary
+      - MONGODB_PRIMARY_HOST=mongo-primary
+      - MONGODB_PRIMARY_PORT_NUMBER=27017
+      - MONGODB_REPLICA_SET_NAME=my-replica-set
+      - MONGODB_INITIAL_PRIMARY_ROOT_PASSWORD=root
+      - MONGODB_REPLICA_SET_KEY=my-replica-set-key
+    depends_on:
+      - mongo-primary
+    volumes:
+      - mongo-secondary-data:/bitnami/mongodb
+
+  mongo-arbiter:
+    image: mongodb/mongodb-community-server:latest
+    restart: always
+    environment:
+      - MONGODB_REPLICA_SET_MODE=arbiter
+      - MONGODB_PRIMARY_HOST=mongo-primary
+      - MONGODB_PRIMARY_PORT_NUMBER=27017
+      - MONGODB_REPLICA_SET_NAME=my-replica-set
+      - MONGODB_INITIAL_PRIMARY_ROOT_PASSWORD=root
+      - MONGODB_REPLICA_SET_KEY=my-replica-set-key
+    depends_on:
+      - mongo-primary
+    volumes:
+      - mongo-arbiter-data:/bitnami/mongodb
+
 volumes:
-  mongo_data:
+  mongo-primary-data:
+  mongo-secondary-data:
+  mongo-arbiter-data:
